@@ -7,4 +7,16 @@ spring:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
 
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+    open-in-view: false
+
+    properties:
+      hibernate:
+        format_sql: true
+
+
+
 
