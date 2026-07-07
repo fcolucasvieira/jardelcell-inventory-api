@@ -1,4 +1,6 @@
 package br.com.jardelcell.inventory.auth.dto;
 
-public record LoginResponse() {
+public record LoginResponse(
+        String token
+) {
 }

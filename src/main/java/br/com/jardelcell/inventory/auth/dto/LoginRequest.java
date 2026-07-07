@@ -1,4 +1,7 @@
 package br.com.jardelcell.inventory.auth.dto;
 
-public record LoginRequest() {
+public record LoginRequest(
+        String email,
+        String password
+) {
 }
