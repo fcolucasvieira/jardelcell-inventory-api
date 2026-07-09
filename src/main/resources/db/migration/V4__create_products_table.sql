@@ -1,0 +1,13 @@
+CREATE TABLE products (
+    id UUID PRIMARY KEY,
+    serial_number VARCHAR(50) NOT NULL UNIQUE,
+    imei VARCHAR(20) UNIQUE,
+    brand VARCHAR(50) NOT NULL,
+    model VARCHAR(100) NOT NULL,
+    storage VARCHAR(20) NOT NULL,
+    color VARCHAR(30) NOT NULL,
+    purchase_price NUMERIC(10,2) NOT NULL,
+    sale_price NUMERIC(10,2) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

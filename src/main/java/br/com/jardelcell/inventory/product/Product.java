@@ -19,7 +19,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(name = "serial_number", nullable = false, unique = true, length = 50)
     private String serialNumber;
 
     @Column(unique = true, length = 20)
@@ -37,10 +37,10 @@ public class Product {
     @Column(nullable = false, length = 30)
     private String color;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(name = "purchase_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal purchasePrice;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(name = "sale_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal salePrice;
 
     @Enumerated(EnumType.STRING)
@@ -48,7 +48,7 @@ public class Product {
     private ProductStatus status;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
     // TODO: In the future, Product should always be created with IN_STOCK.
