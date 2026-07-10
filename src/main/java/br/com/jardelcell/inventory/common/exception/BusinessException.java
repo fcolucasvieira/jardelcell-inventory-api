@@ -1,7 +1,7 @@
 package br.com.jardelcell.inventory.common.exception;
 
-public class BusinessException extends RuntimeException {
-    public BusinessException(String message) {
+public abstract class BusinessException extends RuntimeException {
+    protected BusinessException(String message) {
         super(message);
     }
 }
