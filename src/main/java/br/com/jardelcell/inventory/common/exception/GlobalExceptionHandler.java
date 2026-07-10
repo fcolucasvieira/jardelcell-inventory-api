@@ -16,38 +16,33 @@ public class GlobalExceptionHandler {
             ProductAlreadyExistsException ex,
             HttpServletRequest request
     ) {
-
-        ApiErrorResponse response =
-                new ApiErrorResponse(
-                        Instant.now(),
-                        HttpStatus.CONFLICT.value(),
-                        HttpStatus.CONFLICT.getReasonPhrase(),
-                        ex.getMessage(),
-                        request.getRequestURI()
-                );
-
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(response);
+        return buildErrorResponse(ex, HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiErrorResponse> handleResourceNotFound(
-            ProductAlreadyExistsException ex,
+            ResourceNotFoundException ex,
             HttpServletRequest request
     ) {
+        return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+    }
 
+    private ResponseEntity<ApiErrorResponse> buildErrorResponse(
+            Exception ex,
+            HttpStatus status,
+            HttpServletRequest request
+    ) {
         ApiErrorResponse response =
                 new ApiErrorResponse(
                         Instant.now(),
-                        HttpStatus.NOT_FOUND.value(),
-                        HttpStatus.NOT_FOUND.getReasonPhrase(),
+                        status.value(),
+                        status.getReasonPhrase(),
                         ex.getMessage(),
                         request.getRequestURI()
                 );
 
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(status)
                 .body(response);
     }
 }
