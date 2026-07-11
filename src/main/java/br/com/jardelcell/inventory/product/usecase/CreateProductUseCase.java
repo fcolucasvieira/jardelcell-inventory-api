@@ -1,5 +1,6 @@
 package br.com.jardelcell.inventory.product.usecase;
 
+import br.com.jardelcell.inventory.common.exception.ProductAlreadyExistsException;
 import br.com.jardelcell.inventory.product.Product;
 import br.com.jardelcell.inventory.product.ProductMapper;
 import br.com.jardelcell.inventory.product.ProductRepository;
@@ -17,13 +18,17 @@ public class CreateProductUseCase {
 
     public ProductResponse execute(CreateProductRequest request){
         if (productRepository.existsBySerialNumber(request.serialNumber())) {
-            throw new RuntimeException("Product already exists with Serial Number: " + request.serialNumber());
+            throw new ProductAlreadyExistsException(
+                    "Product already exists with Serial Number: " + request.serialNumber()
+            );
         }
 
         if (request.imei() != null &&
                 !request.imei().isBlank() &&
                 productRepository.existsByImei(request.imei())) {
-            throw new RuntimeException("Product already exists with IMEI: " + request.imei());
+            throw new ProductAlreadyExistsException(
+                    "Product already exists with IMEI: " + request.imei()
+            );
         }
 
         Product product = productMapper.toEntity(request, ProductStatus.IN_STOCK);
