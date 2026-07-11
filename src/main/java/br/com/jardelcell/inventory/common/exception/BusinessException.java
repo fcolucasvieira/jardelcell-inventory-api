@@ -1,7 +1,14 @@
 package br.com.jardelcell.inventory.common.exception;
 
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@Getter
 public abstract class BusinessException extends RuntimeException {
-    protected BusinessException(String message) {
+    private final HttpStatus status;
+
+    protected BusinessException(String message, HttpStatus status) {
         super(message);
+        this.status = status;
     }
 }
