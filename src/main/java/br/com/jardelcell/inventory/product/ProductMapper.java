@@ -21,16 +21,16 @@ public class ProductMapper {
         );
     }
 
-    public ProductResponse toResponse(Product entity) {
+    public ProductResponse toResponse(Product product) {
         return new ProductResponse(
-                entity.getId(),
-                entity.getSerialNumber(),
-                entity.getBrand(),
-                entity.getModel(),
-                entity.getStatus(),
-                entity.getPurchasePrice(),
-                entity.getSalePrice(),
-                entity.getCreatedAt()
+                product.getId(),
+                product.getSerialNumber(),
+                product.getBrand(),
+                product.getModel(),
+                product.getStatus(),
+                product.getPurchasePrice(),
+                product.getSalePrice(),
+                product.getCreatedAt()
         );
     }
 }
