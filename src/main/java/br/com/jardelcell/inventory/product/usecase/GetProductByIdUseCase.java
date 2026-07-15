@@ -6,11 +6,11 @@ import br.com.jardelcell.inventory.product.ProductMapper;
 import br.com.jardelcell.inventory.product.ProductRepository;
 import br.com.jardelcell.inventory.product.dto.ProductResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class GetProductByIdUseCase {
     private final ProductRepository productRepository;

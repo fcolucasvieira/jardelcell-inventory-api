@@ -8,9 +8,9 @@ import br.com.jardelcell.inventory.product.ProductStatus;
 import br.com.jardelcell.inventory.product.dto.CreateProductRequest;
 import br.com.jardelcell.inventory.product.dto.ProductResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class CreateProductUseCase {
     private final ProductRepository productRepository;
