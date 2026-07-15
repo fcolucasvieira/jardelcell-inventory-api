@@ -9,8 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
 @Service
 @RequiredArgsConstructor
 public class InventoryMovementService {
@@ -25,7 +23,9 @@ public class InventoryMovementService {
         String email = authentication.getName();
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with Email: " + email));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "User not found with Email: " + email)
+                );
 
         InventoryMovement movement = new InventoryMovement(
                 product,

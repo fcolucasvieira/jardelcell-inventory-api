@@ -1,12 +1,14 @@
 package br.com.jardelcell.inventory.product.usecase;
 
 import br.com.jardelcell.inventory.common.exception.ProductAlreadyExistsException;
+import br.com.jardelcell.inventory.inventory.InventoryMovementService;
 import br.com.jardelcell.inventory.product.Product;
 import br.com.jardelcell.inventory.product.ProductMapper;
 import br.com.jardelcell.inventory.product.ProductRepository;
 import br.com.jardelcell.inventory.product.ProductStatus;
 import br.com.jardelcell.inventory.product.dto.CreateProductRequest;
 import br.com.jardelcell.inventory.product.dto.ProductResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,9 @@ import org.springframework.stereotype.Service;
 public class CreateProductUseCase {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final InventoryMovementService inventoryMovementService;
 
+    @Transactional
     public ProductResponse execute(CreateProductRequest request){
         if (productRepository.existsBySerialNumber(request.serialNumber())) {
             throw new ProductAlreadyExistsException(
@@ -34,6 +38,8 @@ public class CreateProductUseCase {
         Product product = productMapper.toEntity(request, ProductStatus.IN_STOCK);
 
         productRepository.save(product);
+
+        inventoryMovementService.registerEntry(product);
 
         return productMapper.toResponse(product);
     }
