@@ -47,12 +47,14 @@ public class Product {
     @Column(nullable = false)
     private ProductStatus status;
 
-    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
-    // TODO: In the future, Product should always be created with IN_STOCK.
-    // The status will be defined by the domain instead of being received as a constructor parameter.
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = OffsetDateTime.now();
+    }
+
     public Product(String serialNumber, String imei,
                    String brand, String model, String storage, String color,
                    BigDecimal purchasePrice, BigDecimal salePrice,
