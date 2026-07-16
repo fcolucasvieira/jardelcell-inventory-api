@@ -69,4 +69,8 @@ public class Product {
         this.salePrice = salePrice;
         this.status = status;
     }
+
+    public void markAsSold() {
+        this.status = ProductStatus.SOLD;
+    }
 }
