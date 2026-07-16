@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class InventoryMovementService {
@@ -16,16 +18,7 @@ public class InventoryMovementService {
     private final UserRepository userRepository;
 
     public void registerEntry(Product product) {
-        Authentication authentication = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
-
-        String email = authentication.getName();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "User not found with Email: " + email)
-                );
+        User user = getAuthenticatedUser();
 
         InventoryMovement movement = new InventoryMovement(
                 product,
@@ -36,5 +29,33 @@ public class InventoryMovementService {
         );
 
         inventoryMovementRepository.save(movement);
+    }
+
+    public void registerSale(Product product, BigDecimal movementPrice, String observation) {
+        User user = getAuthenticatedUser();
+
+        InventoryMovement movement = new InventoryMovement(
+                product,
+                user,
+                MovementType.SALE,
+                movementPrice,
+                observation
+        );
+
+        inventoryMovementRepository.save(movement);
+    }
+
+    private User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        String email = authentication.getName();
+
+        return userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User not found with Email: " + email
+                        ));
     }
 }
