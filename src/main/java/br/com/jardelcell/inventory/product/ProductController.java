@@ -4,9 +4,11 @@ import br.com.jardelcell.inventory.inventory.dto.InventoryMovementResponse;
 import br.com.jardelcell.inventory.inventory.usecase.ListProductMovementsUseCase;
 import br.com.jardelcell.inventory.product.dto.CreateProductRequest;
 import br.com.jardelcell.inventory.product.dto.ProductResponse;
+import br.com.jardelcell.inventory.product.dto.SellProductRequest;
 import br.com.jardelcell.inventory.product.usecase.CreateProductUseCase;
 import br.com.jardelcell.inventory.product.usecase.GetProductByIdUseCase;
 import br.com.jardelcell.inventory.product.usecase.ListProductsUseCase;
+import br.com.jardelcell.inventory.product.usecase.SellProductUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +25,21 @@ public class ProductController {
     private final ListProductsUseCase listProductsUseCase;
     private final GetProductByIdUseCase getProductByIdUseCase;
     private final ListProductMovementsUseCase listProductMovementsUseCase;
-
+    private final SellProductUseCase sellProductUseCase;
 
     @PostMapping
     public ResponseEntity<ProductResponse> create(@RequestBody CreateProductRequest request) {
         ProductResponse response = createProductUseCase.execute(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/{productId}/sale")
+    public ResponseEntity<ProductResponse> sell(@PathVariable UUID productId,
+                                                @RequestBody SellProductRequest request) {
+        ProductResponse response = sellProductUseCase.execute(productId, request);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping

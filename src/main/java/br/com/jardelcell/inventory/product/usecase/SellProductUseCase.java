@@ -29,8 +29,10 @@ public class SellProductUseCase {
 
         product.markAsSold();
 
-        // TODO: register sale movement
-        inventoryMovementService.registerSale(product, request.salePrice(), request.observation());
+        inventoryMovementService.registerSale(
+                product,
+                request.salePrice(),
+                request.observation());
 
         return productMapper.toResponse(product);
     }
