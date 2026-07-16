@@ -71,6 +71,10 @@ public class Product {
     }
 
     public void markAsSold() {
+        if(this.status != ProductStatus.IN_STOCK) {
+            throw new IllegalStateException("Only products in stock can be sold.");
+        }
+
         this.status = ProductStatus.SOLD;
     }
 }
