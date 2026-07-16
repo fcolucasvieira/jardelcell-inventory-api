@@ -1,5 +1,7 @@
 package br.com.jardelcell.inventory.product;
 
+import br.com.jardelcell.inventory.inventory.dto.InventoryMovementResponse;
+import br.com.jardelcell.inventory.inventory.usecase.ListProductMovementsUseCase;
 import br.com.jardelcell.inventory.product.dto.CreateProductRequest;
 import br.com.jardelcell.inventory.product.dto.ProductResponse;
 import br.com.jardelcell.inventory.product.usecase.CreateProductUseCase;
@@ -20,6 +22,7 @@ public class ProductController {
     private final CreateProductUseCase createProductUseCase;
     private final ListProductsUseCase listProductsUseCase;
     private final GetProductByIdUseCase getProductByIdUseCase;
+    private final ListProductMovementsUseCase listProductMovementsUseCase;
 
 
     @PostMapping
@@ -39,6 +42,13 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getById(@PathVariable UUID id) {
         ProductResponse response = getProductByIdUseCase.execute(id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{productId}/movements")
+    public ResponseEntity<List<InventoryMovementResponse>> listProductMovements(@PathVariable UUID productId) {
+        List<InventoryMovementResponse> response = listProductMovementsUseCase.execute(productId);
 
         return ResponseEntity.ok(response);
     }

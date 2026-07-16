@@ -8,7 +8,7 @@ import br.com.jardelcell.inventory.product.ProductRepository;
 import br.com.jardelcell.inventory.product.ProductStatus;
 import br.com.jardelcell.inventory.product.dto.CreateProductRequest;
 import br.com.jardelcell.inventory.product.dto.ProductResponse;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
