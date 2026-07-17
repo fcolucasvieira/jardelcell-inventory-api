@@ -45,6 +45,20 @@ public class InventoryMovementService {
         inventoryMovementRepository.save(movement);
     }
 
+    public void registerReserve(Product product, String observation) {
+        User user = getAuthenticatedUser();
+
+        InventoryMovement movement = new InventoryMovement(
+                product,
+                user,
+                MovementType.RESERVE,
+                null,
+                observation
+        );
+
+        inventoryMovementRepository.save(movement);
+    }
+
     private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder
                 .getContext()
