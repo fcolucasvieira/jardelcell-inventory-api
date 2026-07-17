@@ -77,4 +77,12 @@ public class Product {
 
         this.status = ProductStatus.SOLD;
     }
+
+    public void markAsReserved() {
+        if(this.status != ProductStatus.IN_STOCK) {
+            throw new IllegalArgumentException("Only products in stock can be reserved.");
+        }
+
+        this.status = ProductStatus.RESERVED;
+    }
 }
