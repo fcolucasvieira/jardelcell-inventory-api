@@ -4,11 +4,9 @@ import br.com.jardelcell.inventory.inventory.dto.InventoryMovementResponse;
 import br.com.jardelcell.inventory.inventory.usecase.ListProductMovementsUseCase;
 import br.com.jardelcell.inventory.product.dto.CreateProductRequest;
 import br.com.jardelcell.inventory.product.dto.ProductResponse;
+import br.com.jardelcell.inventory.product.dto.ReserveProductRequest;
 import br.com.jardelcell.inventory.product.dto.SellProductRequest;
-import br.com.jardelcell.inventory.product.usecase.CreateProductUseCase;
-import br.com.jardelcell.inventory.product.usecase.GetProductByIdUseCase;
-import br.com.jardelcell.inventory.product.usecase.ListProductsUseCase;
-import br.com.jardelcell.inventory.product.usecase.SellProductUseCase;
+import br.com.jardelcell.inventory.product.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +24,7 @@ public class ProductController {
     private final GetProductByIdUseCase getProductByIdUseCase;
     private final ListProductMovementsUseCase listProductMovementsUseCase;
     private final SellProductUseCase sellProductUseCase;
+    private final ReserveProductUseCase reserveProductUseCase;
 
     @PostMapping
     public ResponseEntity<ProductResponse> create(@RequestBody CreateProductRequest request) {
@@ -38,6 +37,14 @@ public class ProductController {
     public ResponseEntity<ProductResponse> sell(@PathVariable UUID productId,
                                                 @RequestBody SellProductRequest request) {
         ProductResponse response = sellProductUseCase.execute(productId, request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{productId}/reserve")
+    public ResponseEntity<ProductResponse> reserve(@PathVariable UUID productId,
+                                                   @RequestBody ReserveProductRequest request) {
+        ProductResponse response = reserveProductUseCase.execute(productId, request);
 
         return ResponseEntity.ok(response);
     }
