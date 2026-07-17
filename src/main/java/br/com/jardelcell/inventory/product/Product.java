@@ -70,6 +70,14 @@ public class Product {
         this.status = status;
     }
 
+    public void markAsInStock() {
+        if(this.status != ProductStatus.RESERVED) {
+            throw new IllegalStateException("Only reserved products can returned to stock.");
+        }
+
+        this.status = ProductStatus.IN_STOCK;
+    }
+
     public void markAsSold() {
         if(this.status != ProductStatus.IN_STOCK) {
             throw new IllegalStateException("Only products in stock can be sold.");
