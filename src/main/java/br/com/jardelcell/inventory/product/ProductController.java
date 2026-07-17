@@ -2,10 +2,7 @@ package br.com.jardelcell.inventory.product;
 
 import br.com.jardelcell.inventory.inventory.dto.InventoryMovementResponse;
 import br.com.jardelcell.inventory.inventory.usecase.ListProductMovementsUseCase;
-import br.com.jardelcell.inventory.product.dto.CreateProductRequest;
-import br.com.jardelcell.inventory.product.dto.ProductResponse;
-import br.com.jardelcell.inventory.product.dto.ReserveProductRequest;
-import br.com.jardelcell.inventory.product.dto.SellProductRequest;
+import br.com.jardelcell.inventory.product.dto.*;
 import br.com.jardelcell.inventory.product.usecase.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +22,7 @@ public class ProductController {
     private final ListProductMovementsUseCase listProductMovementsUseCase;
     private final SellProductUseCase sellProductUseCase;
     private final ReserveProductUseCase reserveProductUseCase;
+    private final UnreserveProductUseCase unreserveProductUseCase;
 
     @PostMapping
     public ResponseEntity<ProductResponse> create(@RequestBody CreateProductRequest request) {
@@ -52,6 +50,17 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductResponse>> list() {
         List<ProductResponse> response = listProductsUseCase.execute();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{productId}/unreserve")
+    public ResponseEntity<ProductResponse> unreserve(
+            @PathVariable UUID productId,
+            @RequestBody UnreserveProductRequest request) {
+
+        ProductResponse response =
+                unreserveProductUseCase.execute(productId, request);
 
         return ResponseEntity.ok(response);
     }
