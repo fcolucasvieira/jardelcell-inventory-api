@@ -72,7 +72,6 @@ public class InventoryMovementService {
 
         inventoryMovementRepository.save(movement);
     }
-
     private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder
                 .getContext()
