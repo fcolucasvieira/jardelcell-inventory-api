@@ -4,6 +4,7 @@ public enum MovementType {
     ENTRY,
     SALE,
     RESERVE,
+    UNRESERVE,
     RETURN,
     DEFECT
 }
