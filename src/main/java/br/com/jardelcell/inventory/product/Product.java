@@ -1,5 +1,6 @@
 package br.com.jardelcell.inventory.product;
 
+import br.com.jardelcell.inventory.common.exception.InvalidProductStatusException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -72,7 +73,7 @@ public class Product {
 
     public void markAsInStock() {
         if(this.status != ProductStatus.RESERVED) {
-            throw new IllegalStateException("Only reserved products can returned to stock.");
+            throw new InvalidProductStatusException("Only reserved products can returned to stock.");
         }
 
         this.status = ProductStatus.IN_STOCK;
@@ -80,7 +81,7 @@ public class Product {
 
     public void markAsSold() {
         if(this.status != ProductStatus.IN_STOCK) {
-            throw new IllegalStateException("Only products in stock can be sold.");
+            throw new InvalidProductStatusException("Only products in stock can be sold.");
         }
 
         this.status = ProductStatus.SOLD;
@@ -88,7 +89,7 @@ public class Product {
 
     public void markAsReserved() {
         if(this.status != ProductStatus.IN_STOCK) {
-            throw new IllegalArgumentException("Only products in stock can be reserved.");
+            throw new InvalidProductStatusException("Only products in stock can be reserved.");
         }
 
         this.status = ProductStatus.RESERVED;
