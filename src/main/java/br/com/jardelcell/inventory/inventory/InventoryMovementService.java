@@ -45,6 +45,20 @@ public class InventoryMovementService {
         inventoryMovementRepository.save(movement);
     }
 
+    public void registerExchange(Product product, BigDecimal movementPrice, String observation) {
+        User user = getAuthenticatedUser();
+
+        InventoryMovement movement = new InventoryMovement(
+                product,
+                user,
+                MovementType.EXCHANGE,
+                movementPrice,
+                observation
+        );
+
+        inventoryMovementRepository.save(movement);
+    }
+
     public void registerReserve(Product product, String observation) {
         User user = getAuthenticatedUser();
 
