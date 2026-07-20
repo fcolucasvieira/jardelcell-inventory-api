@@ -86,6 +86,17 @@ public class Product {
         this.status = ProductStatus.SOLD;
     }
 
+    public void markAsExchanged() {
+        if(this.status != ProductStatus.IN_STOCK &&
+                this.status != ProductStatus.RESERVED) {
+            throw new InvalidProductStatusException(
+                    "Only products in stock or reserved can be exchanged."
+            );
+        }
+
+        this.status = ProductStatus.EXCHANGED;
+    }
+
     public void markAsReserved() {
         if(this.status != ProductStatus.IN_STOCK) {
             throw new InvalidProductStatusException("Only products in stock can be reserved.");
