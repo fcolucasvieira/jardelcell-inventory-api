@@ -98,7 +98,7 @@ public class Product {
         if(this.status != ProductStatus.IN_STOCK &&
                 this.status != ProductStatus.RESERVED) {
             throw new InvalidProductStatusException(
-                    "Only products in stock or reserved can be defective."
+                    "Only products in stock or reserved can be marked as defective."
             );
         }
 

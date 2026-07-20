@@ -6,5 +6,5 @@ public enum MovementType {
     RESERVE,
     UNRESERVE,
     RETURN,
-    DEFECT
+    DEFECTIVE
 }
