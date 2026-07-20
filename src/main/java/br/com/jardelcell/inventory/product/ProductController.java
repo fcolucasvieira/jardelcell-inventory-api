@@ -24,6 +24,7 @@ public class ProductController {
     private final ReserveProductUseCase reserveProductUseCase;
     private final UnreserveProductUseCase unreserveProductUseCase;
     private final DefectiveProductUseCase defectiveProductUseCase;
+    private final ExchangeProductUseCase exchangeProductUseCase;
 
     @PostMapping
     public ResponseEntity<ProductResponse> create(@RequestBody CreateProductRequest request) {
@@ -36,6 +37,14 @@ public class ProductController {
     public ResponseEntity<ProductResponse> sell(@PathVariable UUID productId,
                                                 @RequestBody SellProductRequest request) {
         ProductResponse response = sellProductUseCase.execute(productId, request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{productId}/exchange")
+    public ResponseEntity<ProductResponse> exchange(@PathVariable UUID productId,
+                                                    @RequestBody ExchangeProductRequest request) {
+        ProductResponse response = exchangeProductUseCase.execute(productId, request);
 
         return ResponseEntity.ok(response);
     }
