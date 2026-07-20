@@ -93,4 +93,15 @@ public class Product {
 
         this.status = ProductStatus.RESERVED;
     }
+
+    public void markAsDefective() {
+        if(this.status != ProductStatus.IN_STOCK &&
+                this.status != ProductStatus.RESERVED) {
+            throw new InvalidProductStatusException(
+                    "Only products in stock or reserved can be defective."
+            );
+        }
+
+        this.status = ProductStatus.DEFECTIVE;
+    }
 }
