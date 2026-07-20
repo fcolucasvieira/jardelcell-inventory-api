@@ -23,6 +23,7 @@ public class ProductController {
     private final SellProductUseCase sellProductUseCase;
     private final ReserveProductUseCase reserveProductUseCase;
     private final UnreserveProductUseCase unreserveProductUseCase;
+    private final DefectiveProductUseCase defectiveProductUseCase;
 
     @PostMapping
     public ResponseEntity<ProductResponse> create(@RequestBody CreateProductRequest request) {
@@ -61,6 +62,14 @@ public class ProductController {
 
         ProductResponse response =
                 unreserveProductUseCase.execute(productId, request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{productId}/defective")
+    public ResponseEntity<ProductResponse> markAsDefective(@PathVariable UUID productId,
+                                                     @RequestBody DefectiveProductRequest request) {
+        ProductResponse response = defectiveProductUseCase.execute(productId, request);
 
         return ResponseEntity.ok(response);
     }
