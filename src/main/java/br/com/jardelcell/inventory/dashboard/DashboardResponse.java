@@ -6,15 +6,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record DashboardResponse(
-        Integer productsInStock,
-        Integer reservedProducts,
-        Integer soldProducts,
-        Integer defectiveProducts,
-        Integer exchangedProducts,
-
+        Long productsInStock,
+        Long reservedProducts,
+        Long soldProducts,
+        Long defectiveProducts,
+        Long exchangedProducts,
         BigDecimal stockInvestment,
         BigDecimal salesRevenue,
-
         List<InventoryMovementResponse> lastMovements
 ) {
 }

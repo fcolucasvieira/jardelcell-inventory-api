@@ -10,4 +10,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     boolean existsBySerialNumber(String serialNumber);
 
     boolean existsByImei(String imei);
+
+    long countByStatus(ProductStatus status);
 }
