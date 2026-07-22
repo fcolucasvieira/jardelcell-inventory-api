@@ -16,7 +16,8 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ValidationErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ValidationErrorResponse> handleValidationException(
+            MethodArgumentNotValidException ex) {
         List<FieldValidationError> errors = ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(fieldError -> new FieldValidationError(
