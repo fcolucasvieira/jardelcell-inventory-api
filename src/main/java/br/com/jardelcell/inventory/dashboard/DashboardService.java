@@ -1,7 +1,9 @@
 package br.com.jardelcell.inventory.dashboard;
 
+import br.com.jardelcell.inventory.inventory.InventoryMovementMapper;
 import br.com.jardelcell.inventory.inventory.InventoryMovementRepository;
 import br.com.jardelcell.inventory.inventory.MovementType;
+import br.com.jardelcell.inventory.inventory.dto.InventoryMovementResponse;
 import br.com.jardelcell.inventory.product.ProductRepository;
 import br.com.jardelcell.inventory.product.ProductStatus;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class DashboardService {
     private final ProductRepository productRepository;
     private final InventoryMovementRepository inventoryMovementRepository;
+    private final InventoryMovementMapper inventoryMovementMapper;
 
     private static final List<ProductStatus> STOCK_STATUSES =
             List.of(
@@ -44,6 +47,12 @@ public class DashboardService {
                 inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENTS))
                 .orElse(BigDecimal.ZERO);
 
+        List<InventoryMovementResponse> lastMovements =
+                inventoryMovementRepository.findTop5ByOrderByCreatedAtDesc()
+                        .stream()
+                        .map(inventoryMovementMapper::toResponse)
+                        .toList();
+
         return new DashboardResponse(
                 inStock,
                 reserved,
@@ -52,7 +61,7 @@ public class DashboardService {
                 exchanged,
                 stockInvestment,
                 salesRevenue,
-                List.of()
+                lastMovements
         );
     }
 }

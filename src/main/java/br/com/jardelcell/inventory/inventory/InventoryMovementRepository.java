@@ -27,4 +27,6 @@ public interface InventoryMovementRepository extends JpaRepository<InventoryMove
     """
     )
     BigDecimal sumMovementPriceByTypeIn(List<MovementType> types);
+
+    List<InventoryMovement> findTop5ByOrderByCreatedAtDesc();
 }
