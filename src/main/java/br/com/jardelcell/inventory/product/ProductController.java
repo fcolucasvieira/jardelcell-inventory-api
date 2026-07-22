@@ -4,6 +4,7 @@ import br.com.jardelcell.inventory.inventory.dto.InventoryMovementResponse;
 import br.com.jardelcell.inventory.inventory.usecase.ListProductMovementsUseCase;
 import br.com.jardelcell.inventory.product.dto.*;
 import br.com.jardelcell.inventory.product.usecase.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ProductController {
     private final ExchangeProductUseCase exchangeProductUseCase;
 
     @PostMapping
-    public ResponseEntity<ProductResponse> create(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<ProductResponse> create(@RequestBody @Valid CreateProductRequest request) {
         ProductResponse response = createProductUseCase.execute(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -35,7 +36,7 @@ public class ProductController {
 
     @PostMapping("/{productId}/sale")
     public ResponseEntity<ProductResponse> sell(@PathVariable UUID productId,
-                                                @RequestBody SellProductRequest request) {
+                                                @Valid @RequestBody SellProductRequest request) {
         ProductResponse response = sellProductUseCase.execute(productId, request);
 
         return ResponseEntity.ok(response);
@@ -43,7 +44,7 @@ public class ProductController {
 
     @PostMapping("/{productId}/exchange")
     public ResponseEntity<ProductResponse> exchange(@PathVariable UUID productId,
-                                                    @RequestBody ExchangeProductRequest request) {
+                                                    @Valid @RequestBody ExchangeProductRequest request) {
         ProductResponse response = exchangeProductUseCase.execute(productId, request);
 
         return ResponseEntity.ok(response);
@@ -51,23 +52,15 @@ public class ProductController {
 
     @PostMapping("/{productId}/reserve")
     public ResponseEntity<ProductResponse> reserve(@PathVariable UUID productId,
-                                                   @RequestBody ReserveProductRequest request) {
+                                                   @Valid @RequestBody ReserveProductRequest request) {
         ProductResponse response = reserveProductUseCase.execute(productId, request);
 
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProductResponse>> list() {
-        List<ProductResponse> response = listProductsUseCase.execute();
-
-        return ResponseEntity.ok(response);
-    }
-
     @PostMapping("/{productId}/unreserve")
-    public ResponseEntity<ProductResponse> unreserve(
-            @PathVariable UUID productId,
-            @RequestBody UnreserveProductRequest request) {
+    public ResponseEntity<ProductResponse> unreserve(@PathVariable UUID productId,
+                                                     @Valid @RequestBody UnreserveProductRequest request) {
 
         ProductResponse response =
                 unreserveProductUseCase.execute(productId, request);
@@ -77,8 +70,15 @@ public class ProductController {
 
     @PostMapping("/{productId}/defective")
     public ResponseEntity<ProductResponse> markAsDefective(@PathVariable UUID productId,
-                                                     @RequestBody DefectiveProductRequest request) {
+                                                           @Valid @RequestBody DefectiveProductRequest request) {
         ProductResponse response = defectiveProductUseCase.execute(productId, request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductResponse>> list() {
+        List<ProductResponse> response = listProductsUseCase.execute();
 
         return ResponseEntity.ok(response);
     }
