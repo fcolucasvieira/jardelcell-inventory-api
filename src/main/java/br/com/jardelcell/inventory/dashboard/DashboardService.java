@@ -54,13 +54,8 @@ public class DashboardService {
                         .toList();
 
         return new DashboardResponse(
-                inStock,
-                reserved,
-                sold,
-                defective,
-                exchanged,
-                stockInvestment,
-                salesRevenue,
+                inStock, reserved, sold, defective, exchanged,
+                stockInvestment, salesRevenue,
                 lastMovements
         );
     }
