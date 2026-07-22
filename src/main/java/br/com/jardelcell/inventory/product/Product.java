@@ -79,8 +79,9 @@ public class Product {
     }
 
     public void markAsSold() {
-        if(this.status != ProductStatus.IN_STOCK) {
-            throw new InvalidProductStatusException("Only products in stock can be sold.");
+        if(this.status != ProductStatus.IN_STOCK &&
+                this.status != ProductStatus.RESERVED) {
+            throw new InvalidProductStatusException("Only products in stock or reserved can be sold.");
         }
 
         this.status = ProductStatus.SOLD;
