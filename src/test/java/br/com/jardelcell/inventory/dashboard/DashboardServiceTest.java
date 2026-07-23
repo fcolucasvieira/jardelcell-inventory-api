@@ -33,26 +33,20 @@ class DashboardServiceTest {
     private DashboardService dashboardService;
 
     private static final List<ProductStatus> STOCK_STATUSES =
-            List.of(
-                    ProductStatus.IN_STOCK,
-                    ProductStatus.RESERVED
-            );
+            List.of(ProductStatus.IN_STOCK, ProductStatus.RESERVED);
 
     private static final List<MovementType> REVENUE_MOVEMENTS =
-            List.of(
-                    MovementType.SALE,
-                    MovementType.EXCHANGE
-            );
+            List.of(MovementType.SALE, MovementType.EXCHANGE);
 
     @Test
-    void shouldReturnDashboardSuccessfully() {
+    void shouldGetDashboardSuccessfully() {
         InventoryMovement movement = mock(InventoryMovement.class);
 
         InventoryMovementResponse movementResponse =
                 new InventoryMovementResponse(
                         MovementType.SALE,
                         new BigDecimal("4500.00"),
-                        "Product sold",
+                        "Product sold for R$ 4500",
                         OffsetDateTime.now(),
                         "Lucas"
                 );
@@ -76,8 +70,13 @@ class DashboardServiceTest {
         DashboardResponse result = dashboardService.getDashboard();
 
         assertNotNull(result);
+
+        // Just a check to query countByStatus (avoiding boilerplate)
         assertEquals(5L, result.productsInStock());
+
         assertEquals(new BigDecimal("35000.00"), result.stockInvestment());
+        assertEquals(new BigDecimal("67000.00"), result.salesRevenue());
+
         assertEquals(1, result.lastMovements().size());
 
         verify(productRepository).countByStatus(ProductStatus.IN_STOCK);

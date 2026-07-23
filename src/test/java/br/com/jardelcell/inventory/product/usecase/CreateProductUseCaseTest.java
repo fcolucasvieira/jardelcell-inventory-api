@@ -1,6 +1,8 @@
 package br.com.jardelcell.inventory.product.usecase;
 
 import br.com.jardelcell.inventory.common.exception.ProductAlreadyExistsException;
+import br.com.jardelcell.inventory.fixture.ProductFixture;
+import br.com.jardelcell.inventory.fixture.ProductResponseFixture;
 import br.com.jardelcell.inventory.inventory.InventoryMovementService;
 import br.com.jardelcell.inventory.product.Product;
 import br.com.jardelcell.inventory.product.ProductMapper;
@@ -46,38 +48,11 @@ class CreateProductUseCaseTest {
         );
     }
 
-    private Product createProduct() {
-        return new Product(
-                "SN123456789",
-                "356789123456789",
-                "Apple",
-                "iPhone 15",
-                "128GB",
-                "Black",
-                new BigDecimal("4000.00"),
-                new BigDecimal("5500.00"),
-                ProductStatus.IN_STOCK
-        );
-    }
-
-    private ProductResponse createResponse() {
-        return new ProductResponse(
-                UUID.randomUUID(),
-                "SN123456789",
-                "Apple",
-                "iPhone 15",
-                ProductStatus.IN_STOCK,
-                new BigDecimal("4000.00"),
-                new BigDecimal("5500.00"),
-                OffsetDateTime.now()
-        );
-    }
-
     @Test
     void shouldCreateProductSuccessfully() {
         CreateProductRequest request = createRequest();
-        Product product = createProduct();
-        ProductResponse response = createResponse();
+        Product product = ProductFixture.inStock();
+        ProductResponse response = ProductResponseFixture.inStock();
 
         when(productRepository.existsBySerialNumber(request.serialNumber()))
                 .thenReturn(false);

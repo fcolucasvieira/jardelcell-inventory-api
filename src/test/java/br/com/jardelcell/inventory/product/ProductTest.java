@@ -1,6 +1,7 @@
 package br.com.jardelcell.inventory.product;
 
 import br.com.jardelcell.inventory.common.exception.InvalidProductStatusException;
+import br.com.jardelcell.inventory.fixture.ProductFixture;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -10,23 +11,9 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTest {
-    private Product createProduct(ProductStatus status) {
-        return new Product(
-                "SN123456789",
-                "356789123456789",
-                "Apple",
-                "iPhone 15",
-                "128GB",
-                "Black",
-                new BigDecimal("4000.00"),
-                new BigDecimal("5500.00"),
-                status
-        );
-    }
-
     @Test
     void shouldMarkProductAsInStock() {
-        Product product = createProduct(ProductStatus.RESERVED);
+        Product product = ProductFixture.reserved();
 
         product.markAsInStock();
 
@@ -41,7 +28,7 @@ class ProductTest {
     }
     )
     void shouldThrowExceptionWhenMarkingProductAsInStockFromUnavailableStatus(ProductStatus status) {
-        Product product = createProduct(status);
+        Product product = ProductFixture.withStatus(status);
 
         assertThrows(
                 InvalidProductStatusException.class,
@@ -57,7 +44,7 @@ class ProductTest {
             }
     )
     void shouldMarkProductAsSold(ProductStatus status) {
-        Product product = createProduct(status);
+        Product product = ProductFixture.withStatus(status);
 
         product.markAsSold();
 
@@ -72,7 +59,7 @@ class ProductTest {
             }
     )
     void shouldThrowExceptionWhenSellingUnavailableProduct(ProductStatus status) {
-        Product product = createProduct(status);
+        Product product = ProductFixture.withStatus(status);
 
         assertThrows(
                 InvalidProductStatusException.class,
@@ -88,7 +75,7 @@ class ProductTest {
             }
     )
     void shouldMarkProductAsExchanged(ProductStatus status) {
-        Product product = createProduct(status);
+        Product product = ProductFixture.withStatus(status);
 
         product.markAsExchanged();
 
@@ -103,7 +90,7 @@ class ProductTest {
             }
     )
     void shouldThrowExceptionWhenExchangingUnavailableProduct(ProductStatus status) {
-        Product product = createProduct(status);
+        Product product = ProductFixture.withStatus(status);
 
         assertThrows(
                 InvalidProductStatusException.class,
@@ -113,7 +100,7 @@ class ProductTest {
 
     @Test
     void shouldMarkProductAsReserved() {
-        Product product = createProduct(ProductStatus.IN_STOCK);
+        Product product = ProductFixture.inStock();
 
         product.markAsReserved();
 
@@ -128,7 +115,7 @@ class ProductTest {
             }
     )
     void shouldThrowExceptionWhenReservingUnavailableProduct(ProductStatus status) {
-        Product product = createProduct(status);
+        Product product = ProductFixture.withStatus(status);
 
         assertThrows(
                 InvalidProductStatusException.class,
@@ -144,7 +131,7 @@ class ProductTest {
             }
     )
     void shouldMarkProductAsDefective(ProductStatus status) {
-        Product product = createProduct(status);
+        Product product = ProductFixture.withStatus(status);
 
         product.markAsDefective();
 
@@ -159,7 +146,7 @@ class ProductTest {
             }
     )
     void shouldThrowExceptionWhenMarkingUnavailableProductAsDefective(ProductStatus status) {
-        Product product = createProduct(status);
+        Product product = ProductFixture.withStatus(status);
 
         assertThrows(
                 InvalidProductStatusException.class,

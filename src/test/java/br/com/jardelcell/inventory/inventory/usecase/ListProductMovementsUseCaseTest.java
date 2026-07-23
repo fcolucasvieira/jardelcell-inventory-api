@@ -1,6 +1,7 @@
 package br.com.jardelcell.inventory.inventory.usecase;
 
 import br.com.jardelcell.inventory.common.exception.ResourceNotFoundException;
+import br.com.jardelcell.inventory.fixture.ProductFixture;
 import br.com.jardelcell.inventory.inventory.InventoryMovement;
 import br.com.jardelcell.inventory.inventory.InventoryMovementMapper;
 import br.com.jardelcell.inventory.inventory.InventoryMovementRepository;
@@ -37,25 +38,11 @@ class ListProductMovementsUseCaseTest {
     @InjectMocks
     private ListProductMovementsUseCase listProductMovementsUseCase;
 
-    private Product createProduct() {
-        return new Product(
-                "SN123456789",
-                "356789123456789",
-                "Apple",
-                "iPhone 15",
-                "128GB",
-                "Black",
-                new BigDecimal("4000.00"),
-                new BigDecimal("5500.00"),
-                ProductStatus.IN_STOCK
-        );
-    }
-
     @Test
     void shouldListProductMovementsSuccessfully() {
         UUID productId = UUID.randomUUID();
 
-        Product product = createProduct();
+        Product product = ProductFixture.inStock();
 
         InventoryMovement movement = mock(InventoryMovement.class);
 

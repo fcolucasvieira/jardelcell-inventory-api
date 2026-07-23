@@ -1,6 +1,8 @@
 package br.com.jardelcell.inventory.product.usecase;
 
 import br.com.jardelcell.inventory.common.exception.ResourceNotFoundException;
+import br.com.jardelcell.inventory.fixture.ProductFixture;
+import br.com.jardelcell.inventory.fixture.ProductResponseFixture;
 import br.com.jardelcell.inventory.inventory.InventoryMovementService;
 import br.com.jardelcell.inventory.product.Product;
 import br.com.jardelcell.inventory.product.ProductMapper;
@@ -48,28 +50,9 @@ class ReserveProductUseCaseTest {
 
         ReserveProductRequest request = createRequest();
 
-        Product product = new Product(
-                "SN123456789",
-                "356789123456789",
-                "Apple",
-                "iPhone 15",
-                "128GB",
-                "Black",
-                new BigDecimal("4000.00"),
-                new BigDecimal("5500.00"),
-                ProductStatus.IN_STOCK
-        );
+        Product product = ProductFixture.inStock();
 
-        ProductResponse response = new ProductResponse(
-                UUID.randomUUID(),
-                "SN123456789",
-                "Apple",
-                "iPhone 15",
-                ProductStatus.RESERVED,
-                new BigDecimal("4000.00"),
-                new BigDecimal("5500.00"),
-                OffsetDateTime.now()
-        );
+        ProductResponse response = ProductResponseFixture.reserved();
 
         when(productRepository.findById(productId))
                 .thenReturn(Optional.of(product));
