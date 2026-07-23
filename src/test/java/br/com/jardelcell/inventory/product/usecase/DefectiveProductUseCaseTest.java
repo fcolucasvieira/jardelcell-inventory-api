@@ -6,8 +6,8 @@ import br.com.jardelcell.inventory.product.Product;
 import br.com.jardelcell.inventory.product.ProductMapper;
 import br.com.jardelcell.inventory.product.ProductRepository;
 import br.com.jardelcell.inventory.product.ProductStatus;
+import br.com.jardelcell.inventory.product.dto.DefectiveProductRequest;
 import br.com.jardelcell.inventory.product.dto.ProductResponse;
-import br.com.jardelcell.inventory.product.dto.SellProductRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class SellProductUseCaseTest {
+class DefectiveProductUseCaseTest {
     @Mock
     private ProductRepository productRepository;
     @Mock
@@ -35,12 +35,11 @@ class SellProductUseCaseTest {
     private InventoryMovementService inventoryMovementService;
 
     @InjectMocks
-    private SellProductUseCase sellProductUseCase;
+    private DefectiveProductUseCase defectiveProductUseCase;
 
-    private SellProductRequest createRequest() {
-        return  new SellProductRequest(
-                new BigDecimal("4500.00"),
-                "Product sold for R$ 4500"
+    private DefectiveProductRequest createRequest() {
+        return new DefectiveProductRequest(
+                "Product with a defective side button (Power On/Off)"
         );
     }
 
@@ -51,10 +50,10 @@ class SellProductUseCaseTest {
                     "IN_STOCK", "RESERVED"
             }
     )
-    void shouldSellProductSuccessfully(ProductStatus status) {
+    void shouldMarkAsDefectiveProductSuccessfully(ProductStatus status) {
         UUID productId = UUID.randomUUID();
 
-        SellProductRequest request = createRequest();
+        DefectiveProductRequest request = createRequest();
 
         Product product = new Product(
                 "SN123456789",
@@ -73,7 +72,7 @@ class SellProductUseCaseTest {
                 "SN123456789",
                 "Apple",
                 "iPhone 15",
-                ProductStatus.SOLD,
+                ProductStatus.DEFECTIVE,
                 new BigDecimal("4000.00"),
                 new BigDecimal("5500.00"),
                 OffsetDateTime.now()
@@ -84,18 +83,17 @@ class SellProductUseCaseTest {
         when(productMapper.toResponse(product))
                 .thenReturn(response);
 
-        ProductResponse result = sellProductUseCase.execute(productId, request);
+        ProductResponse result = defectiveProductUseCase.execute(productId, request);
 
         assertEquals(response, result);
         assertEquals(
-                ProductStatus.SOLD,
+                ProductStatus.DEFECTIVE,
                 product.getStatus()
         );
 
         verify(productRepository).findById(productId);
-        verify(inventoryMovementService).registerSale(
+        verify(inventoryMovementService).registerDefective(
                 product,
-                request.salePrice(),
                 request.observation()
         );
         verify(productMapper).toResponse(product);
@@ -105,19 +103,19 @@ class SellProductUseCaseTest {
     void shouldThrowExceptionWhenProductNotFound() {
         UUID productId = UUID.randomUUID();
 
-        SellProductRequest request = createRequest();
+        DefectiveProductRequest request = createRequest();
 
         when(productRepository.findById(productId))
                 .thenReturn(Optional.empty());
 
         assertThrows(
                 ResourceNotFoundException.class,
-                () -> sellProductUseCase.execute(productId, request)
+                () -> defectiveProductUseCase.execute(productId, request)
         );
 
         verify(productRepository).findById(productId);
 
-        verify(inventoryMovementService, never()).registerSale(any(), any(), any());
+        verify(inventoryMovementService, never()).registerDefective(any(), any());
         verify(productMapper, never()).toResponse(any());
     }
 }
