@@ -21,13 +21,13 @@ public class DashboardService {
     private final InventoryMovementRepository inventoryMovementRepository;
     private final InventoryMovementMapper inventoryMovementMapper;
 
-    private static final List<ProductStatus> STOCK_STATUSES =
+    private static final List<ProductStatus> INVENTORY_VALUE_STATUSES =
             List.of(
                     ProductStatus.IN_STOCK,
                     ProductStatus.RESERVED
             );
 
-    private static final List<MovementType> REVENUE_MOVEMENTS =
+    private static final List<MovementType> REVENUE_MOVEMENTS_TYPES =
             List.of(
                     MovementType.SALE,
                     MovementType.EXCHANGE
@@ -41,11 +41,11 @@ public class DashboardService {
         long exchanged = productRepository.countByStatus(ProductStatus.EXCHANGED);
 
         BigDecimal stockInvestment = Optional.ofNullable(
-                productRepository.sumPurchasePriceByStatusIn(STOCK_STATUSES))
+                productRepository.sumPurchasePriceByStatusIn(INVENTORY_VALUE_STATUSES))
                 .orElse(BigDecimal.ZERO);
 
         BigDecimal salesRevenue = Optional.ofNullable(
-                inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENTS))
+                inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENTS_TYPES))
                 .orElse(BigDecimal.ZERO);
 
         List<InventoryMovementResponse> lastMovements = inventoryMovementRepository

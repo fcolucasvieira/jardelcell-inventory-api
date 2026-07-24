@@ -33,10 +33,10 @@ class DashboardServiceTest {
     @InjectMocks
     private DashboardService dashboardService;
 
-    private static final List<ProductStatus> STOCK_STATUSES =
+    private static final List<ProductStatus> INVENTORY_VALUE_STATUSES  =
             List.of(ProductStatus.IN_STOCK, ProductStatus.RESERVED);
 
-    private static final List<MovementType> REVENUE_MOVEMENTS =
+    private static final List<MovementType> REVENUE_MOVEMENT_TYPES =
             List.of(MovementType.SALE, MovementType.EXCHANGE);
 
     @Test
@@ -58,9 +58,9 @@ class DashboardServiceTest {
         when(productRepository.countByStatus(ProductStatus.DEFECTIVE)).thenReturn(1L);
         when(productRepository.countByStatus(ProductStatus.EXCHANGED)).thenReturn(3L);
 
-        when(productRepository.sumPurchasePriceByStatusIn(STOCK_STATUSES))
+        when(productRepository.sumPurchasePriceByStatusIn(INVENTORY_VALUE_STATUSES))
                 .thenReturn(new BigDecimal("35000.00"));
-        when(inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENTS))
+        when(inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENT_TYPES))
                 .thenReturn(new BigDecimal("67000.00"));
 
         when(inventoryMovementRepository.findLatest(PageRequest.of(0, 5)))
@@ -86,8 +86,8 @@ class DashboardServiceTest {
         verify(productRepository).countByStatus(ProductStatus.DEFECTIVE);
         verify(productRepository).countByStatus(ProductStatus.EXCHANGED);
 
-        verify(productRepository).sumPurchasePriceByStatusIn(STOCK_STATUSES);
-        verify(inventoryMovementRepository).sumMovementPriceByTypeIn(REVENUE_MOVEMENTS);
+        verify(productRepository).sumPurchasePriceByStatusIn(INVENTORY_VALUE_STATUSES);
+        verify(inventoryMovementRepository).sumMovementPriceByTypeIn(REVENUE_MOVEMENT_TYPES);
 
         verify(inventoryMovementRepository).findLatest(PageRequest.of(0, 5));
 

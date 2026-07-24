@@ -18,8 +18,8 @@ public class GetProductByIdUseCase {
 
     public ProductResponse execute(UUID id) {
         Product product = productRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Product not found with Id: " + id)
-        );
+                () -> new ResourceNotFoundException("Product not found with Id: " + id
+                ));
 
         return productMapper.toResponse(product);
     }
