@@ -1,4 +1,4 @@
-package br.com.jardelcell.inventory.fixture;
+package br.com.jardelcell.inventory.support.fixture;
 
 import br.com.jardelcell.inventory.product.Product;
 import br.com.jardelcell.inventory.product.ProductStatus;

@@ -1,7 +1,7 @@
 package br.com.jardelcell.inventory.inventory.usecase;
 
 import br.com.jardelcell.inventory.common.exception.ResourceNotFoundException;
-import br.com.jardelcell.inventory.fixture.ProductFixture;
+import br.com.jardelcell.inventory.support.fixture.ProductFixture;
 import br.com.jardelcell.inventory.inventory.InventoryMovement;
 import br.com.jardelcell.inventory.inventory.InventoryMovementMapper;
 import br.com.jardelcell.inventory.inventory.InventoryMovementRepository;
@@ -9,7 +9,6 @@ import br.com.jardelcell.inventory.inventory.MovementType;
 import br.com.jardelcell.inventory.inventory.dto.InventoryMovementResponse;
 import br.com.jardelcell.inventory.product.Product;
 import br.com.jardelcell.inventory.product.ProductRepository;
-import br.com.jardelcell.inventory.product.ProductStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

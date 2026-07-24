@@ -1,8 +1,8 @@
 package br.com.jardelcell.inventory.product.usecase;
 
 import br.com.jardelcell.inventory.common.exception.ProductAlreadyExistsException;
-import br.com.jardelcell.inventory.fixture.ProductFixture;
-import br.com.jardelcell.inventory.fixture.ProductResponseFixture;
+import br.com.jardelcell.inventory.support.fixture.ProductFixture;
+import br.com.jardelcell.inventory.support.fixture.ProductResponseFixture;
 import br.com.jardelcell.inventory.inventory.InventoryMovementService;
 import br.com.jardelcell.inventory.product.Product;
 import br.com.jardelcell.inventory.product.ProductMapper;
@@ -17,8 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

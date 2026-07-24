@@ -1,12 +1,10 @@
 package br.com.jardelcell.inventory.product;
 
 import br.com.jardelcell.inventory.common.exception.InvalidProductStatusException;
-import br.com.jardelcell.inventory.fixture.ProductFixture;
+import br.com.jardelcell.inventory.support.fixture.ProductFixture;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-
-import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
