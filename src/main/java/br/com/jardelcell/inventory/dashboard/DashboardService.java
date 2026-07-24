@@ -7,6 +7,7 @@ import br.com.jardelcell.inventory.inventory.dto.InventoryMovementResponse;
 import br.com.jardelcell.inventory.product.ProductRepository;
 import br.com.jardelcell.inventory.product.ProductStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -47,8 +48,8 @@ public class DashboardService {
                 inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENTS))
                 .orElse(BigDecimal.ZERO);
 
-        List<InventoryMovementResponse> lastMovements =
-                inventoryMovementRepository.findTop5ByOrderByCreatedAtDesc()
+        List<InventoryMovementResponse> lastMovements = inventoryMovementRepository
+                .findLatest(PageRequest.of(0, 5))
                         .stream()
                         .map(inventoryMovementMapper::toResponse)
                         .toList();

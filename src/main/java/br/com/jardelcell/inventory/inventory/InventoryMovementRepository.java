@@ -1,6 +1,6 @@
 package br.com.jardelcell.inventory.inventory;
 
-import br.com.jardelcell.inventory.product.ProductStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,11 +12,11 @@ import java.util.UUID;
 @Repository
 public interface InventoryMovementRepository extends JpaRepository<InventoryMovement, UUID> {
     @Query("""
-            SELECT m
-            FROM InventoryMovement m
-            JOIN FETCH m.user
-            WHERE m.product.id = :productId
-            ORDER BY m.createdAt DESC 
+            SELECT im
+            FROM InventoryMovement im
+            JOIN FETCH im.user
+            WHERE im.product.id = :productId
+            ORDER BY im.createdAt DESC 
     """)
     List<InventoryMovement> findByProductId(UUID productId);
 
@@ -28,5 +28,12 @@ public interface InventoryMovementRepository extends JpaRepository<InventoryMove
     )
     BigDecimal sumMovementPriceByTypeIn(List<MovementType> types);
 
-    List<InventoryMovement> findTop5ByOrderByCreatedAtDesc();
+    @Query("""
+    SELECT im
+    FROM InventoryMovement im
+    JOIN FETCH im.user
+    ORDER BY im.createdAt DESC
+    """
+    )
+    List<InventoryMovement> findLatest(Pageable pageable);
 }

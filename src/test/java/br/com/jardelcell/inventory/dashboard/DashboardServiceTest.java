@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -62,7 +63,7 @@ class DashboardServiceTest {
         when(inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENTS))
                 .thenReturn(new BigDecimal("67000.00"));
 
-        when(inventoryMovementRepository.findTop5ByOrderByCreatedAtDesc())
+        when(inventoryMovementRepository.findLatest(PageRequest.of(0, 5)))
                 .thenReturn(List.of(movement));
         when(inventoryMovementMapper.toResponse(movement))
                 .thenReturn(movementResponse);
@@ -88,7 +89,7 @@ class DashboardServiceTest {
         verify(productRepository).sumPurchasePriceByStatusIn(STOCK_STATUSES);
         verify(inventoryMovementRepository).sumMovementPriceByTypeIn(REVENUE_MOVEMENTS);
 
-        verify(inventoryMovementRepository).findTop5ByOrderByCreatedAtDesc();
+        verify(inventoryMovementRepository).findLatest(PageRequest.of(0, 5));
 
         verify(inventoryMovementMapper).toResponse(movement);
     }
