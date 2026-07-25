@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProdDatabaseSeeder implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(ProdDatabaseSeeder.class);
-
     @Value("${app.bootstrap.admin.full-name}")
     private String adminFullName;
 

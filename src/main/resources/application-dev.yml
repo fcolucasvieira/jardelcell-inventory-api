@@ -41,4 +41,11 @@ logging:
     root: INFO
     br.com.jardelcell.inventory: DEBUG
 
+app:
+  bootstrap:
+    admin:
+      full-name: ${ADMIN_FULL_NAME}
+      email: ${ADMIN_EMAIL}
+      password: ${ADMIN_PASSWORD}
+
 
