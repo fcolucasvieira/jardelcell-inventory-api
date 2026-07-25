@@ -31,3 +31,20 @@ logging:
   level:
     root: INFO
     br.com.jardelcell.inventory: INFO
+
+app:
+  bootstrap:
+    admin:
+      full-name: ${ADMIN_FULL_NAME}
+      email: ${ADMIN_EMAIL}
+      password: ${ADMIN_PASSWORD}
+
+    employee1:
+      full-name: ${EMPLOYEE_1_FULL_NAME}
+      email: ${EMPLOYEE_1_EMAIL}
+      password: ${EMPLOYEE_1_PASSWORD}
+
+    employee2:
+      full-name: ${EMPLOYEE_2_FULL_NAME}
+      email: ${EMPLOYEE_2_EMAIL}
+      password: ${EMPLOYEE_2_PASSWORD}
