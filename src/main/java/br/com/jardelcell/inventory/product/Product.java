@@ -70,6 +70,8 @@ public class Product {
         this.status = status;
     }
 
+    // TODO: Refactor state machine validations post-MVP
+
     public void markAsInStock() {
         if(this.status != ProductStatus.RESERVED &&
                 this.status != ProductStatus.DEFECTIVE) {

@@ -22,16 +22,10 @@ public class DashboardService {
     private final InventoryMovementMapper inventoryMovementMapper;
 
     private static final List<ProductStatus> INVENTORY_VALUE_STATUSES =
-            List.of(
-                    ProductStatus.IN_STOCK,
-                    ProductStatus.RESERVED
-            );
+            List.of(ProductStatus.IN_STOCK, ProductStatus.RESERVED);
 
     private static final List<MovementType> REVENUE_MOVEMENTS_TYPES =
-            List.of(
-                    MovementType.SALE,
-                    MovementType.EXCHANGE
-            );
+            List.of(MovementType.SALE, MovementType.EXCHANGE);
 
     public DashboardResponse getDashboard() {
         long inStock = productRepository.countByStatus(ProductStatus.IN_STOCK);
@@ -44,8 +38,20 @@ public class DashboardService {
                 productRepository.sumPurchasePriceByStatusIn(INVENTORY_VALUE_STATUSES))
                 .orElse(BigDecimal.ZERO);
 
+        BigDecimal projectedRevenue = Optional.ofNullable(
+                productRepository.sumSalePriceByStatusIn(INVENTORY_VALUE_STATUSES))
+                .orElse(BigDecimal.ZERO);
+
         BigDecimal salesRevenue = Optional.ofNullable(
                 inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENTS_TYPES))
+                .orElse(BigDecimal.ZERO);
+
+        BigDecimal repairCosts = Optional.ofNullable(
+                        inventoryMovementRepository.sumMovementPriceByTypeIn(List.of(MovementType.REPAIR)))
+                .orElse(BigDecimal.ZERO);
+
+        BigDecimal defectiveLoss = Optional.ofNullable(
+                        productRepository.sumPurchasePriceByStatusIn(List.of(ProductStatus.DEFECTIVE)))
                 .orElse(BigDecimal.ZERO);
 
         List<InventoryMovementResponse> lastMovements = inventoryMovementRepository
@@ -56,7 +62,8 @@ public class DashboardService {
 
         return new DashboardResponse(
                 inStock, reserved, sold, defective, exchanged,
-                stockInvestment, salesRevenue,
+                stockInvestment, projectedRevenue, salesRevenue,
+                repairCosts, defectiveLoss,
                 lastMovements
         );
     }

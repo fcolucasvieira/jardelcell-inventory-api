@@ -12,28 +12,26 @@ import java.util.UUID;
 @Repository
 public interface InventoryMovementRepository extends JpaRepository<InventoryMovement, UUID> {
     @Query("""
-            SELECT im
-            FROM InventoryMovement im
-            JOIN FETCH im.user
-            WHERE im.product.id = :productId
-            ORDER BY im.createdAt DESC 
+            SELECT m
+            FROM InventoryMovement m
+            JOIN FETCH m.user
+            WHERE m.product.id = :productId
+            ORDER BY m.createdAt DESC 
     """)
     List<InventoryMovement> findByProductId(UUID productId);
 
     @Query("""
-    SELECT SUM(im.movementPrice)
-    FROM InventoryMovement im
-    WHERE im.type IN :types
-    """
-    )
+    SELECT SUM(m.movementPrice)
+    FROM InventoryMovement m
+    WHERE m.type IN :types
+    """)
     BigDecimal sumMovementPriceByTypeIn(List<MovementType> types);
 
     @Query("""
-    SELECT im
-    FROM InventoryMovement im
-    JOIN FETCH im.user
-    ORDER BY im.createdAt DESC
-    """
-    )
+    SELECT m
+    FROM InventoryMovement m
+    JOIN FETCH m.user
+    ORDER BY m.createdAt DESC
+    """)
     List<InventoryMovement> findLatest(Pageable pageable);
 }

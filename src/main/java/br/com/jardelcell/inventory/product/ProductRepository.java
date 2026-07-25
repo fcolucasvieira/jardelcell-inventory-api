@@ -22,4 +22,11 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     WHERE p.status IN :statuses
     """)
     BigDecimal sumPurchasePriceByStatusIn(List<ProductStatus> statuses);
+
+    @Query("""
+    SELECT SUM(p.salePrice)
+    FROM Product p
+    WHERE p.status IN :statuses
+    """)
+    BigDecimal sumSalePriceByStatusIn(List<ProductStatus> statuses);
 }

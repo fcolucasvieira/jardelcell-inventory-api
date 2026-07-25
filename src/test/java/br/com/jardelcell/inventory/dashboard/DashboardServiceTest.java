@@ -60,8 +60,14 @@ class DashboardServiceTest {
 
         when(productRepository.sumPurchasePriceByStatusIn(INVENTORY_VALUE_STATUSES))
                 .thenReturn(new BigDecimal("35000.00"));
+        when(productRepository.sumSalePriceByStatusIn(INVENTORY_VALUE_STATUSES))
+                .thenReturn(new BigDecimal("50000.00"));
         when(inventoryMovementRepository.sumMovementPriceByTypeIn(REVENUE_MOVEMENT_TYPES))
                 .thenReturn(new BigDecimal("67000.00"));
+        when(inventoryMovementRepository.sumMovementPriceByTypeIn(List.of(MovementType.REPAIR)))
+                .thenReturn(new BigDecimal("350.00"));
+        when(productRepository.sumPurchasePriceByStatusIn(List.of(ProductStatus.DEFECTIVE)))
+                .thenReturn(new BigDecimal("1200.00"));
 
         when(inventoryMovementRepository.findLatest(PageRequest.of(0, 5)))
                 .thenReturn(List.of(movement));
@@ -72,11 +78,17 @@ class DashboardServiceTest {
 
         assertNotNull(result);
 
-        // Just a check to query countByStatus (avoiding boilerplate)
-        assertEquals(5L, result.productsInStock());
+        assertEquals(5L, result.inStock());
+        assertEquals(2L, result.reserved());
+        assertEquals(8L, result.sold());
+        assertEquals(1L, result.defective());
+        assertEquals(3L, result.exchanged());
 
         assertEquals(new BigDecimal("35000.00"), result.stockInvestment());
+        assertEquals(new BigDecimal("50000.00"), result.projectedRevenue());
         assertEquals(new BigDecimal("67000.00"), result.salesRevenue());
+        assertEquals(new BigDecimal("350.00"), result.repairCosts());
+        assertEquals(new BigDecimal("1200.00"), result.defectiveLoss());
 
         assertEquals(1, result.lastMovements().size());
 
@@ -87,7 +99,10 @@ class DashboardServiceTest {
         verify(productRepository).countByStatus(ProductStatus.EXCHANGED);
 
         verify(productRepository).sumPurchasePriceByStatusIn(INVENTORY_VALUE_STATUSES);
+        verify(productRepository).sumSalePriceByStatusIn(INVENTORY_VALUE_STATUSES);
         verify(inventoryMovementRepository).sumMovementPriceByTypeIn(REVENUE_MOVEMENT_TYPES);
+        verify(inventoryMovementRepository).sumMovementPriceByTypeIn(List.of(MovementType.REPAIR));
+        verify(productRepository).sumPurchasePriceByStatusIn(List.of(ProductStatus.DEFECTIVE));
 
         verify(inventoryMovementRepository).findLatest(PageRequest.of(0, 5));
 
