@@ -34,14 +34,18 @@ public class SecurityConfiguration {
                         exception.authenticationEntryPoint(authenticationEntryPoint))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/products").hasRole("ADMIN")
-                        .requestMatchers("/dashboard").hasRole("ADMIN")
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/auth/**").permitAll()
+
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
+
+                        .requestMatchers("/products/**")
+                        .hasAnyRole("ADMIN", "EMPLOYEE")
+
+                        .requestMatchers("/dashboard/**")
+                        .hasAnyRole("ADMIN", "EMPLOYEE")
+
+                        .anyRequest().denyAll()
                 );
 
         return http.build();
