@@ -28,6 +28,47 @@ services:
     networks:
       - inventory_network
 
+  inventory-api:
+    container_name: inventory-api
+
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    env_file:
+      - .env
+
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      DATABASE_USERNAME: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+
+      JWT_SECRET: ${JWT_SECRET}
+
+      ADMIN_FULL_NAME: ${ADMIN_FULL_NAME}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+
+      EMPLOYEE_1_FULL_NAME: ${EMPLOYEE_1_FULL_NAME}
+      EMPLOYEE_1_EMAIL: ${EMPLOYEE_1_EMAIL}
+      EMPLOYEE_1_PASSWORD: ${EMPLOYEE_1_PASSWORD}
+
+      EMPLOYEE_2_FULL_NAME: ${EMPLOYEE_2_FULL_NAME}
+      EMPLOYEE_2_EMAIL: ${EMPLOYEE_2_EMAIL}
+      EMPLOYEE_2_PASSWORD: ${EMPLOYEE_2_PASSWORD}
+
+    ports:
+      - "8080:8080"
+
+    restart: unless-stopped
+
+    networks:
+      - inventory_network
+
 volumes:
   inventory_postgres_data:
 
