@@ -9,9 +9,15 @@ import org.junit.jupiter.params.provider.EnumSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductTest {
-    @Test
-    void shouldMarkProductAsInStock() {
-        Product product = ProductFixture.reserved();
+    @ParameterizedTest
+    @EnumSource(
+            value = ProductStatus.class,
+            names = {
+                    "RESERVED", "DEFECTIVE"
+            }
+    )
+    void shouldMarkProductAsInStock(ProductStatus status) {
+        Product product = ProductFixture.withStatus(status);
 
         product.markAsInStock();
 
@@ -22,7 +28,7 @@ class ProductTest {
     @EnumSource(
             value = ProductStatus.class,
             names = {
-                    "IN_STOCK", "SOLD", "EXCHANGED", "DEFECTIVE"
+                    "IN_STOCK", "SOLD", "EXCHANGED"
     }
     )
     void shouldThrowExceptionWhenMarkingProductAsInStockFromUnavailableStatus(ProductStatus status) {

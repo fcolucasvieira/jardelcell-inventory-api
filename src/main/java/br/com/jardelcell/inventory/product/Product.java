@@ -71,8 +71,11 @@ public class Product {
     }
 
     public void markAsInStock() {
-        if(this.status != ProductStatus.RESERVED) {
-            throw new InvalidProductStatusException("Only reserved products can returned to stock.");
+        if(this.status != ProductStatus.RESERVED &&
+                this.status != ProductStatus.DEFECTIVE) {
+            throw new InvalidProductStatusException(
+                    "Only products reserved or defective can returned to stock."
+            );
         }
 
         this.status = ProductStatus.IN_STOCK;

@@ -101,6 +101,20 @@ public class InventoryMovementService {
         inventoryMovementRepository.save(movement);
     }
 
+    public void registerRepair(Product product, BigDecimal movementPrice, String observation) {
+        User user = getAuthenticatedUser();
+
+        InventoryMovement movement = new InventoryMovement(
+                product,
+                user,
+                MovementType.REPAIR,
+                movementPrice,
+                observation
+        );
+
+        inventoryMovementRepository.save(movement);
+    }
+
     private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder
                 .getContext()

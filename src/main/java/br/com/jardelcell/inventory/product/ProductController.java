@@ -37,6 +37,7 @@ public class ProductController {
     private final UnreserveProductUseCase unreserveProductUseCase;
     private final DefectiveProductUseCase defectiveProductUseCase;
     private final ExchangeProductUseCase exchangeProductUseCase;
+    private final RepairProductUseCase repairProductUseCase;
 
     @Operation(
             summary = "Create product",
@@ -258,6 +259,45 @@ public class ProductController {
     public ResponseEntity<ProductResponse> markAsDefective(@PathVariable UUID productId,
                                                            @Valid @RequestBody DefectiveProductRequest request) {
         ProductResponse response = defectiveProductUseCase.execute(productId, request);
+
+        return ResponseEntity.ok(response);
+    }
+
+
+    @Operation(
+            summary = "Repair product",
+            description = "Repairs a defective product and returns it to stock."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Product repaired successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request data",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Authentication required",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Product not found",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "Product cannot be repaired in its current status",
+                    content = @Content
+            )
+    })
+    @PostMapping("/{productId}/repair")
+    public ResponseEntity<ProductResponse> repair(@PathVariable UUID productId,
+                                                  @Valid @RequestBody RepairProductRequest request) {
+        ProductResponse response = repairProductUseCase.execute(productId, request);
 
         return ResponseEntity.ok(response);
     }
