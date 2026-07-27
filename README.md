@@ -14,6 +14,15 @@
 
 ---
 
+## 🌐 Links rápidos
+
+| Recurso | Acesso |
+|---------|--------|
+| 🚀 API em Produção | [Abrir API](https://inventory-api-i921.onrender.com) |
+| 📚 Swagger | [Abrir Documentação](https://inventory-api-i921.onrender.com/swagger-ui/index.html) |
+
+---
+
 # 📌 Sobre o projeto
 
 A **JardelCell Inventory API** é uma aplicação backend desenvolvida para gerenciar o estoque de dispositivos da Apple da empresa JardelCell.
@@ -252,29 +261,176 @@ A aplicação disponibiliza indicadores estratégicos para apoio à tomada de de
 
 - estoque disponível;
 - aparelhos reservados;
-- aparelhos com defeito;
+- aparelhos defeituosos;
 - aparelhos vendidos;
+- aparelhos trocados;
 - investimento atual em estoque;
 - faturamento obtido com vendas;
-- despesas de produtos defeituosos e reparos;
+- despesas de produtos com defeito e reparos;
 
 Essas informações são calculadas dinamicamente a partir das movimentações registradas no sistema.
 
 ---
 
-# ☁️ Deploy
+# ⚙️ Como executar o projeto
 
-A aplicação encontra-se publicada utilizando a plataforma Render.
+## Pré-requisitos
 
-O deploy é realizado através de:
+Antes de executar a aplicação, certifique-se de possuir instalado:
 
+- Java 21
+- Maven 3.9+
 - Docker
 - Docker Compose
-- PostgreSQL
-- Variáveis de ambiente
-- Build automatizado a partir do GitHub
-
-Além disso, o projeto possui ambientes separados para desenvolvimento e produção utilizando Spring Profiles.
 
 ---
+
+## Clonando o repositório
+
+```bash
+git clone https://github.com/fcolucasvieira/inventory-api.git
+
+cd inventory-api
+```
+
+---
+
+## Configurando as variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto utilizando o arquivo `.env.example` como referência.
+
+As principais variáveis utilizadas são:
+
+```env
+DATABASE_URL=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+
+JWT_SECRET=
+
+ADMIN_FULL_NAME=
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
+```
+
+Para ambiente de produção também podem ser definidos usuários iniciais do sistema através das variáveis:
+
+```env
+EMPLOYEE_1_FULL_NAME=
+EMPLOYEE_1_EMAIL=
+EMPLOYEE_1_PASSWORD=
+
+EMPLOYEE_2_FULL_NAME=
+EMPLOYEE_2_EMAIL=
+EMPLOYEE_2_PASSWORD=
+```
+
+---
+
+## Subindo o banco de dados
+
+Para desenvolvimento basta iniciar o PostgreSQL utilizando Docker Compose.
+
+```bash
+docker compose up -d postgres
+```
+
+---
+
+## Executando a aplicação
+
+Após iniciar o banco de dados:
+
+```bash
+mvn spring-boot:run
+```
+
+A aplicação ficará disponível em:
+
+```
+http://localhost:8080
+```
+
+---
+
+# 📚 Documentação da API
+
+A documentação interativa está disponível através do Swagger.
+
+Em ambiente local:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+A documentação permite:
+
+- autenticar usuários;
+- testar endpoints;
+- visualizar modelos de requisição e resposta;
+- consultar contratos da API.
+
+---
+
+# ☁️ Deploy
+
+A aplicação encontra-se publicada na plataforma **Render**.
+
+O deploy é realizado automaticamente a partir da branch principal do repositório.
+
+A infraestrutura utiliza:
+
+- Docker
+- PostgreSQL
+- Spring Profiles
+- Variáveis de ambiente
+- Health Check (`/actuator/health`)
+
+Essa configuração aproxima o ambiente de produção do ambiente utilizado durante o desenvolvimento.
+
+---
+
+# 🧪 Testes
+
+O projeto possui testes unitários focados nas principais regras de negócio.
+
+Foram utilizados:
+
+- JUnit 5
+- Mockito
+
+Os testes podem ser executados através do comando:
+
+```bash
+mvn test
+```
+
+---
+
+# 🚀 Próximos passos
+
+Entre as evoluções planejadas para o projeto estão:
+
+- auditoria completa das operações;
+- paginação e filtros avançados;
+- exportação de relatórios;
+- notificações por e-mail;
+- métricas e observabilidade;
+- integração com armazenamento de imagens dos dispositivos.
+
+---
+
+# 👨‍💻 Autor
+
+Lucas Vieira
+
+Estudante de Engenharia de Computação — UFC Sobral
+
+GitHub:
+
+https://github.com/fcolucasvieira
+
+LinkedIn:
+
+https://www.linkedin.com/in/fcolucasvieira/
 
