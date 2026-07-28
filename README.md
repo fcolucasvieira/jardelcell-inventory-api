@@ -1,31 +1,31 @@
 # 📦 JardelCell Inventory API
 
-![Java](https://img.shields.io/badge/Java-21-FFD700?style=for-the-badge&logo=openjdk&logoColor=black)
-![Spring Boot](https://img.shields.io/badge/spring_boot-3.5-6DB33F?style=for-the-badge&logo=springboot)
+![Java](https://img.shields.io/badge/Java-21-FFD700?style=for-the-badge&logo=openjdk&logoColor=FFD700)
+![Spring Boot](https://img.shields.io/badge/spring_boot-3.5.X-6DB33F?style=for-the-badge&logo=springboot)
 ![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-ORM-6DB33F?style=for-the-badge&logo=spring)
-![PostgreSQL](https://img.shields.io/badge/postgresql-database-2496ED?style=for-the-badge&logo=postgresql&logoColor=2496ED)
-![Flyway](https://img.shields.io/badge/flyway-migrations-CC0200?style=for-the-badge)
+![PostgreSQL](https://img.shields.io/badge/postgresql-database-blue?style=for-the-badge&logo=postgresql)
+![Flyway](https://img.shields.io/badge/flyway-database_migrations-CC0200?style=for-the-badge)
 ![Spring Security](https://img.shields.io/badge/spring_security-JWT-6DB33F?style=for-the-badge&logo=springsecurity)
 ![Docker](https://img.shields.io/badge/docker-containerization-2496ED?style=for-the-badge&logo=docker)
 ![JUnit](https://img.shields.io/badge/JUnit_5-Testing-25A162?style=for-the-badge&logo=junit5&logoColor=25A162)
 ![Mockito](https://img.shields.io/badge/Mockito-Mocking-red?style=for-the-badge)
 ![Swagger](https://img.shields.io/badge/swagger-api--docs-green?style=for-the-badge&logo=swagger)
-![Render](https://img.shields.io/badge/render-cloud-black?style=for-the-badge&logo=render)
+![Render](https://img.shields.io/badge/render-cloud-560591?style=for-the-badge&logo=render)
 
 ---
 
-## 🌐 Links rápidos
+## 🌐 Experimente a aplicação
 
-| Recurso | Acesso |
-|---------|--------|
-| 🚀 API em Produção | [Abrir API](https://inventory-api-i921.onrender.com) |
-| 📚 Swagger | [Abrir Documentação](https://inventory-api-i921.onrender.com/swagger-ui/index.html) |
+A API encontra-se publicada em produção. Clique nos botões abaixo para acessá-la ou explorar sua documentação:
+
+[![🌐 API Online](https://img.shields.io/badge/API-Online-560591?style=for-the-badge&logo=render&logoColor=white)](https://inventory-api-i921.onrender.com)
+[![📚 Swagger](https://img.shields.io/badge/Swagger-Documentation-green?style=for-the-badge&logo=swagger)](https://inventory-api-i921.onrender.com/swagger-ui/index.html)
 
 ---
 
 # 📌 Sobre o projeto
 
-A **JardelCell Inventory API** é uma aplicação backend desenvolvida para gerenciar o estoque de dispositivos da Apple da empresa JardelCell.
+A **JardelCell Inventory API** é uma aplicação backend desenvolvida para gerenciar o estoque de dispositivos Apple da empresa JardelCell.
 
 O sistema centraliza o gerenciamento completo do ciclo de vida dos dispositivos, permitindo acompanhar cada produto desde a sua entrada no estoque até a sua venda, troca, reserva, envio para reparo, retorno ao estoque ou descarte, mantendo o histórico completo das movimentações realizadas pelos colaboradores.
 
@@ -44,13 +44,17 @@ Antes da aplicação, o controle do estoque era realizado manualmente, dificulta
 - acompanhamento do faturamento obtido com vendas e trocas;
 - identificação do responsável por cada movimentação.
 
-À medida que o volume de produtos aumentava, esse processo tornava-se cada vez mais suscetível a erros e inconsistências. Além disso, não existia uma forma simples de responder perguntas estratégicas como "quantos aparelhos estão em reparo?", "qual o investimento atual no estoque?" ou "quem realizou determinada movimentação?".
+À medida que o volume de produtos aumentava, esse processo tornava-se cada vez mais suscetível a erros e inconsistências. 
+
+Além disso, não existia uma forma simples de responder perguntas estratégicas como "quantos aparelhos estão em reparo?", "qual o investimento atual no estoque?" ou "quem realizou determinada movimentação?".
 
 ---
 
 # 💡 Solução
 
 A Inventory API foi desenvolvida para centralizar todo esse fluxo em uma única aplicação.
+
+A solução proposta centraliza todas as operações relacionadas ao estoque em uma única API, oferecendo segurança, rastreabilidade e indicadores estratégicos para apoio às operações da empresa.
 
 Entre as principais funcionalidades estão:
 
@@ -68,19 +72,20 @@ Entre as principais funcionalidades estão:
 
 # 🚀 Tecnologias utilizadas
 
-| Categoria | Tecnologias |
-|-----------|-------------|
-| Linguagem | Java 21 |
-| Framework | Spring Boot |
-| Segurança | Spring Security + JWT |
-| Banco de Dados | PostgreSQL |
-| Persistência | Spring Data JPA / Hibernate |
-| Migrações | Flyway |
-| Testes | JUnit 5 + Mockito |
-| Documentação | Swagger / OpenAPI |
-| Containerização | Docker + Docker Compose |
-| Deploy | Render |
-| Build | Maven |
+| Categoria       | Tecnologias                 |
+|-----------------|-----------------------------|
+| Arquitetura     | Modular Monolith            |
+| Linguagem       | Java 21                     |
+| Framework       | Spring Boot                 |
+| Segurança       | Spring Security + JWT       |
+| Banco de Dados  | PostgreSQL                  |
+| Persistência    | Spring Data JPA / Hibernate |
+| Migrações       | Flyway                      |
+| Testes          | JUnit 5 + Mockito           |
+| Documentação    | Swagger / OpenAPI           |
+| Containerização | Docker + Docker Compose     |
+| Deploy          | Render                      |
+| Build           | Maven                       |
 
 ---
 
@@ -90,7 +95,9 @@ A **JardelCell Inventory API** foi projetada seguindo uma arquitetura modular, o
 
 Essa abordagem aumenta a coesão entre componentes relacionados, reduz o acoplamento entre funcionalidades e facilita a manutenção e evolução do sistema conforme novas necessidades surgem.
 
-Durante o desenvolvimento foram adotados princípios de **Clean Code**, **SOLID** e separação clara de responsabilidades, buscando reproduzir práticas adotadas em aplicações corporativas reais.
+As regras de negócio são centralizadas em Use Cases, responsáveis por orquestrar as operações da aplicação sem depender diretamente da infraestrutura.
+
+Durante o desenvolvimento foram adotados princípios de **Clean Code**, **SOLID** e separação clara de responsabilidades, buscando adotar práticas comuns em aplicações corporativas.
 
 ---
 
@@ -174,7 +181,7 @@ Cada componente possui responsabilidades bem definidas e foi desenvolvido buscan
 
 ---
 
-## 🍎 Product
+## 🤳 Product
 
 O módulo **Product** representa o núcleo do estoque.
 
@@ -190,7 +197,7 @@ Entre os dados armazenados destacam-se:
 - condição do aparelho;
 - preço de compra;
 - preço de venda;
-- situação atual no estoque.
+- status atual do produto no estoque.
 
 Além do cadastro dos dispositivos, este módulo também concentra as regras responsáveis por impedir inconsistências durante operações de movimentação, garantindo que apenas produtos em estados válidos possam participar de determinados fluxos da aplicação.
 
@@ -266,9 +273,9 @@ A aplicação disponibiliza indicadores estratégicos para apoio à tomada de de
 - aparelhos trocados;
 - investimento atual em estoque;
 - faturamento obtido com vendas;
-- despesas de produtos com defeito e reparos;
+- custos relacionados a reparos de dispositivos.
 
-Essas informações são calculadas dinamicamente a partir das movimentações registradas no sistema.
+Os indicadores são calculados em tempo real diretamente a partir das movimentações persistidas no banco de dados.
 
 ---
 
@@ -374,7 +381,7 @@ A documentação permite:
 
 # ☁️ Deploy
 
-A aplicação encontra-se publicada na plataforma **Render**.
+O serviço encontra-se publicado na **Render** utilizando PostgreSQL gerenciado e variáveis de ambiente configuradas diretamente pela plataforma.
 
 O deploy é realizado automaticamente a partir da branch principal do repositório.
 
@@ -393,6 +400,8 @@ Essa configuração aproxima o ambiente de produção do ambiente utilizado dura
 # 🧪 Testes
 
 O projeto possui testes unitários focados nas principais regras de negócio.
+
+Os testes concentram-se nas regras de negócio da aplicação, validando cenários críticos relacionados ao gerenciamento de produtos e movimentações de estoque.
 
 Foram utilizados:
 
@@ -415,7 +424,6 @@ Entre as evoluções planejadas para o projeto estão:
 - paginação e filtros avançados;
 - exportação de relatórios;
 - notificações por e-mail;
-- métricas e observabilidade;
 - integração com armazenamento de imagens dos dispositivos.
 
 ---
@@ -432,5 +440,5 @@ https://github.com/fcolucasvieira
 
 LinkedIn:
 
-https://www.linkedin.com/in/fcolucasvieira/
+https://www.linkedin.com/in/fco-lucas-vieira/
 
